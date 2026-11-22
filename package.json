@@ -1,0 +1,33 @@
+{
+  "name": "taskflow-api",
+  "version": "1.0.0",
+  "description": "TaskFlow - Task Management REST API (Component 1)",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "test": "jest --ci --colors",
+    "package": "node scripts/package.js"
+  },
+  "keywords": [
+    "taskflow",
+    "devops",
+    "rest-api",
+    "express",
+    "nodejs"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.21.2"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "supertest": "^7.0.0"
+  },
+  "files": [
+    "src/",
+    "package.json",
+    "README.md"
+  ]
+}

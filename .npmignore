@@ -1,0 +1,18 @@
+# Test files and directories
+tests/
+coverage/
+
+# Packaging and CI files
+scripts/
+dist/
+Jenkinsfile
+
+# Config & git files
+.gitignore
+.npmignore
+.git/
+.github/
+
+# Development logs & environment
+*.log
+.env
