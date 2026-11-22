@@ -75,6 +75,7 @@ By default, the server runs at: `http://localhost:8080`
 | :--- | :--- | :--- | :--- |
 | **GET** | `/health` | Check service health status | `200 OK` |
 | **GET** | `/api/tasks` | Retrieve all tasks | `200 OK` |
+| **GET** | `/api/tasks/:id` | Retrieve a single task by ID | `200 OK`, `404 Not Found` |
 | **POST** | `/api/tasks` | Create a new task | `201 Created`, `400 Bad Request` |
 
 ---
@@ -182,6 +183,40 @@ Content-Type: application/json
 
 ---
 
+### D. Get Task by ID: `GET /api/tasks/:id`
+
+**Description:** Retrieves the task matching the supplied `id`. Returns HTTP 200 with the task if found, or HTTP 404 with a descriptive JSON error if the task does not exist.
+
+**Sample Request (Existing Task):**
+```http
+GET /api/tasks/1 HTTP/1.1
+Host: localhost:8080
+```
+
+**Sample Response (HTTP 200 OK):**
+```json
+{
+  "id": 1,
+  "title": "Complete DevOps Assignment",
+  "createdAt": "2026-11-22T15:42:10.500Z"
+}
+```
+
+**Sample Request (Non-Existent Task):**
+```http
+GET /api/tasks/999 HTTP/1.1
+Host: localhost:8080
+```
+
+**Sample Response (HTTP 404 Not Found):**
+```json
+{
+  "error": "Task with ID 999 not found."
+}
+```
+
+---
+
 ## 6. Installation Instructions
 
 ### Prerequisites
@@ -247,7 +282,21 @@ $body = @{ title = "My First Task" } | ConvertTo-Json
 Invoke-RestMethod -Uri "http://localhost:8080/api/tasks" -Method Post -Body $body -ContentType "application/json"
 ```
 
-### 4. Test Validation Error (Empty Title)
+### 4. Get Task by ID (Found)
+```powershell
+Invoke-RestMethod -Uri "http://localhost:8080/api/tasks/1" -Method Get
+```
+
+### 5. Get Task by ID (Not Found - 404)
+```powershell
+try {
+    Invoke-RestMethod -Uri "http://localhost:8080/api/tasks/999" -Method Get
+} catch {
+    $_.ErrorDetails.Message
+}
+```
+
+### 6. Test Validation Error (Empty Title)
 ```powershell
 try {
     $badBody = @{ title = " " } | ConvertTo-Json

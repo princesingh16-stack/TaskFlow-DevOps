@@ -66,4 +66,27 @@ describe('Task API Endpoints (/api/tasks)', () => {
     expect(res.body[0].title).toBe('First Task');
     expect(res.body[1].title).toBe('Second Task');
   });
+
+  test('GET /api/tasks/:id returns the task and HTTP 200 when task exists', async () => {
+    // Create a task first
+    const createRes = await request(app)
+      .post('/api/tasks')
+      .send({ title: 'Task to retrieve' });
+    const taskId = createRes.body.id;
+
+    const res = await request(app).get(`/api/tasks/${taskId}`);
+
+    expect(res.statusCode).toBe(200);
+    expect(res.body).toHaveProperty('id', taskId);
+    expect(res.body).toHaveProperty('title', 'Task to retrieve');
+    expect(res.body).toHaveProperty('createdAt');
+  });
+
+  test('GET /api/tasks/:id returns HTTP 404 when task does not exist', async () => {
+    const res = await request(app).get('/api/tasks/999');
+
+    expect(res.statusCode).toBe(404);
+    expect(res.body).toHaveProperty('error');
+    expect(res.body.error).toMatch(/not found/i);
+  });
 });

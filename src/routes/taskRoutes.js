@@ -13,6 +13,25 @@ router.get('/', (req, res) => {
 });
 
 /**
+ * GET /api/tasks/:id
+ * Returns the task matching the supplied ID.
+ * Returns HTTP 200 with the task if found.
+ * Returns HTTP 404 with a meaningful JSON error if the task does not exist.
+ */
+router.get('/:id', (req, res) => {
+  const { id } = req.params;
+  const task = taskService.getTaskById(id);
+
+  if (!task) {
+    return res.status(404).json({
+      error: `Task with ID ${id} not found.`
+    });
+  }
+
+  return res.status(200).json(task);
+});
+
+/**
  * POST /api/tasks
  * Accepts JSON containing a task title.
  * Validates input, creates a new task, and returns HTTP 201.
