@@ -405,3 +405,6 @@ Automated testing is a cornerstone of Continuous Integration (CI). In this proje
   - Negative testing ensures empty or missing titles return HTTP `400` with descriptive error messages.
   - `GET /health` verifies application availability and readiness.
 - **CI Gate:** Because Jest returns a non-zero exit code upon test failure, Jenkins immediately halts execution before packaging, preventing broken or unverified code from ever reaching production.
+
+## CI Pipeline Verification
+This project uses Jenkins to automatically build, test, and package the TaskFlow API whenever changes are pushed to GitHub.
