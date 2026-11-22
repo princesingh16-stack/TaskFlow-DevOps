@@ -31,6 +31,17 @@ const createTask = (title) => {
 };
 
 /**
+ * Retrieve a single task by ID
+ * @param {number|string} id - The ID of the task
+ * @returns {Object|null} The task object if found, or null
+ */
+const getTaskById = (id) => {
+  const numericId = Number(id);
+  const task = tasks.find((t) => t.id === numericId);
+  return task || null;
+};
+
+/**
  * Reset in-memory tasks
  * Useful for ensuring test isolation between test runs
  */
@@ -41,6 +52,7 @@ const resetTasks = () => {
 
 module.exports = {
   getAllTasks,
+  getTaskById,
   createTask,
   resetTasks
 };
